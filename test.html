@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JPU Simulator - Debugging Page</title>
+
+    <link rel="stylesheet" href="dist/output.css" />
+  </head>
+
+  <body class="app-shell font-mono">
+    <!-- Test page shell: shared navigation plus a minimal layout for running and viewing the suite. -->
+    <header
+      class="border border-black bg-zinc-100 p-3 flex justify-between items-center"
+    >
+      <h1 class="font-bold text-xl">JPU Test Suite</h1>
+
+      <nav class="flex gap-2" aria-label="Primary navigation">
+        <a href="rom.html" class="border border-black px-3 mx-1 py-2 bg-white">
+          ROM
+        </a>
+        <a
+          href="index.html"
+          class="border border-black px-3 mx-1 py-2 bg-white"
+        >
+          HOME
+        </a>
+        <a href="dash.html" class="border border-black px-3 mx-1 py-2 bg-white">
+          DASH<span class="sm:hidden">BOARD</span>
+        </a>
+        <a href="docs.html" class="border border-black px-3 py-2 bg-white"
+          >DOCS</a
+        >
+        <a href="settings.html" class="border border-black px-3 py-2 bg-white"
+          >SETTINGS</a
+        >
+      </nav>
+    </header>
+
+    <main class="p-3 space-y-3">
+      <!-- Controls section contains the entry point for running the test suite. -->
+
+      <div class="border border-black bg-white p-3">
+        <h2 class="font-bold mb-3">CONTROLS</h2>
+
+        <button
+          id="runTests"
+          class="hover:cursor-pointer border border-black px-4 py-2 bg-white hover:bg-zinc-100"
+        >
+          RUN TESTS
+        </button>
+      </div>
+
+      <!-- Summary section reports the overall pass/fail status after a run. -->
+
+      <div class="border border-black bg-white p-3">
+        <h2 class="font-bold mb-3">SUMMARY</h2>
+
+        <div id="summary">No tests have been run.</div>
+      </div>
+
+      <!-- Output section shows detailed log output from the test runner. -->
+
+      <div class="border border-black bg-white p-3">
+        <h2 class="font-bold mb-3">TEST OUTPUT</h2>
+
+        <pre
+          id="consoleOutput"
+          class="overflow-y-auto h-96 whitespace-pre-wrap"
+        ></pre>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      © 2026 JPU Simulator. Built for learning and experimentation.
+    </footer>
+    <script type="module" src="js/ui.js"></script>
+    <script type="module" src="tests/guard.js"></script>
+    <script type="module" src="tests/test.js"></script>
+  </body>
+</html>

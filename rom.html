@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JPU Simulator - Rom Programmer</title>
+
+    <link rel="stylesheet" href="dist/output.css" />
+  </head>
+
+  <body class="app-shell font-mono">
+    <!-- ROM page shell: shared navigation plus the editor and import/export controls. -->
+    <header
+      class="border-b border-black bg-zinc-100 p-3 flex justify-between items-center"
+    >
+      <a class="site-title" href="index.html"
+        >JPU <span><span class="hidden md:inline"></span>ROM CODER</span></a
+      >
+
+      <nav class="flex gap-2" aria-label="Primary navigation">
+        <a href="test.html" class="border border-black px-3 mx-1 py-2 bg-white">
+          TEST
+        </a>
+        <a
+          href="index.html"
+          class="border border-black px-3 mx-1 py-2 bg-white"
+        >
+          HOME
+        </a>
+
+        <a href="dash.html" class="border border-black px-3 mx-1 py-2 bg-white">
+          DASH<span class="sm:hidden">BOARD</span>
+        </a>
+        <a href="docs.html" class="border border-black px-3 py-2 bg-white"
+          >DOCS</a
+        >
+        <a href="settings.html" class="border border-black px-3 py-2 bg-white"
+          >SETTINGS</a
+        >
+      </nav>
+    </header>
+
+    <main class="p-4">
+      <!-- Main editor panel contains the ROM controls, address selector, and instruction form. -->
+      <div class="max-w-xl mx-auto border border-black bg-white p-4">
+        <h2 class="font-bold text-lg mb-3">ROM CONTROL</h2>
+
+        <!-- Guided examples are copied into the editable ROM; they are not read-only files. -->
+        <section
+          class="border border-black p-3 mb-4"
+          aria-labelledby="example-title"
+        >
+          <h3 id="example-title" class="font-bold">BEGINNER EXAMPLES</h3>
+          <p class="text-sm mb-2">
+            Load a small guided program, inspect it, then select SAVE.
+          </p>
+          <div class="flex gap-2">
+            <select id="exampleSelect" class="border flex-1"></select
+            ><button id="loadExample" type="button" class="border px-3 py-2">
+              LOAD
+            </button>
+          </div>
+        </section>
+
+        <!-- Current address shows where the next instruction will be written. -->
+        <div class="mb-4">
+          <p>Current Address:</p>
+
+          <div id="romAddress" class="text-2xl">00000000</div>
+        </div>
+
+        <!-- ROM action buttons let the user save, reset, and navigate through addresses. -->
+        <div class="flex flex-wrap gap-2 mb-5">
+          <button
+            id="romSet"
+            type="button"
+            class="hover:cursor-pointer border px-3 py-2"
+          >
+            SET
+          </button>
+
+          <button
+            type="button"
+            id="romReset"
+            class="hover:cursor-pointer border px-3 py-2 bg-red-400"
+          >
+            RESET
+          </button>
+
+          <button
+            id="romPCInc"
+            type="button"
+            class="hover:cursor-pointer border px-3 py-2"
+          >
+            PC+
+          </button>
+
+          <button
+            id="romPCDec"
+            type="button"
+            class="hover:cursor-pointer border px-3 py-2"
+          >
+            PC-
+          </button>
+
+          <button
+            id="romPCR"
+            type="button"
+            class="hover:cursor-pointer border px-3 py-2"
+          >
+            PCR
+          </button>
+        </div>
+        <p id="saveStatus" class="text-sm mt-2"></p>
+
+        <!-- Instruction form collects all fields required to define one ROM entry. -->
+        <form id="romForm" class="space-y-3">
+          <label> Opcode </label>
+
+          <select id="opcodeSelect" class="border w-full"></select>
+
+          <label> A Source </label>
+
+          <select id="aSelect" class="border w-full"></select>
+
+          <label> B Source </label>
+
+          <select id="bSelect" class="border w-full"></select>
+
+          <label> Write Register </label>
+
+          <select id="rgSelect" class="border w-full"></select>
+
+          <label> ALU </label>
+
+          <select id="aluSelect" class="border w-full"></select>
+
+          <label> Set Flags </label>
+
+          <select id="setFlagsSelect" class="border w-full"></select>
+
+          <label> Invert </label>
+
+          <select id="invertSelect" class="border w-full"></select>
+
+          <label> Condition </label>
+
+          <select id="conditionSelect" class="border w-full"></select>
+
+          <label> Use Condition </label>
+
+          <select id="useConditionSelect" class="border w-full"></select>
+
+          <label> Operand </label>
+
+          <input
+            id="operandInput"
+            type="number"
+            min="0"
+            max="255"
+            class="border w-full px-2"
+          />
+
+          <button
+            type="button"
+            id="romSave"
+            class="hover:cursor-pointer border border-black w-full py-2 mt-3"
+          >
+            SAVE
+          </button>
+        </form>
+      </div>
+    </main>
+    <!-- Import/export section allows ROM programs to be shared or restored later. -->
+    <section class="max-w-xl mx-auto border border-black bg-white p-4">
+      <h2 class="font-bold text-lg mb-3">IMPORT / EXPORT</h2>
+      <div id="savedInstructions" class="space-y-2">
+        <button
+          id="romExport"
+          class="hover:cursor-pointer border w-full px-3 py-2"
+        >
+          Export ROM
+        </button>
+
+        <div class="flex flex-col gap-2 border border-black p-3 m-2">
+          <label class="font-medium">Import ROM:</label>
+          <input
+            type="file"
+            id="romImport"
+            accept=".jpur"
+            class="hover:cursor-pointer border px-2"
+          />
+        </div>
+        <p id="importStatus" class="text-sm mt-2"></p>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      © 2026 JPU Simulator. Built for learning and experimentation.
+    </footer>
+    <script type="module" src="js/ui.js"></script>
+    <script type="module" src="js/rom.js"></script>
+  </body>
+</html>

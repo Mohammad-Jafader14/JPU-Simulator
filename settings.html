@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Personal settings for the JPU Simulator."
+    />
+    <title>JPU Simulator — Settings</title>
+    <link rel="stylesheet" href="dist/output.css" />
+  </head>
+  <body class="app-shell font-mono">
+    <!-- Settings page shell: shared navigation plus the preference form and developer tools. -->
+    <header class="site-header">
+      <a class="site-title" href="index.html">JPU <span>Simulator</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="rom.html">ROM Editor</a><a href="dash.html">Dashboard</a
+        ><a href="docs.html">Docs</a
+        ><a href="settings.html" aria-current="page">Settings</a
+        ><a href="test.html">Tests</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <!-- Hero section introduces what the settings page controls. -->
+      <section class="hero-panel" aria-labelledby="settings-title">
+        <p class="eyebrow">PREFERENCES</p>
+        <h1 id="settings-title">Make the simulator yours.</h1>
+        <p>These settings are saved only in this browser.</p>
+      </section>
+      <!-- Preference form lets the user customize theme, speed, display format, and hints. -->
+      <section class="doc-section">
+        <form id="settingsForm" class="settings-form">
+          <fieldset>
+            <legend>Theme</legend>
+            <label
+              ><input type="radio" name="theme" value="system" /> System</label
+            ><label
+              ><input type="radio" name="theme" value="light" /> Light</label
+            ><label
+              ><input type="radio" name="theme" value="dark" /> Dark</label
+            >
+          </fieldset>
+          <label>
+            <input
+              type="number"
+              class="border border-black px-2 py-1 w-full block"
+              name="defaultSpeed"
+              min="1"
+              max="240"
+            />
+            ticks per second</label
+          >
+          <label
+            >Number display
+            <select
+              name="numberFormat"
+              class="border border-black px-2 py-1 w-full block"
+            >
+              <option value="all">Binary, decimal, and hex</option>
+              <option value="binary">Binary first</option>
+              <option value="decimal">Decimal first</option>
+              <option value="hex">Hex first</option>
+            </select></label
+          >
+          <label class="check-label"
+            ><input type="checkbox" name="hints" /> Show beginner hints</label
+          >
+          <div class="settings-actions">
+            <button type="submit">SAVE SETTINGS</button
+            ><button id="resetSettings" type="button">RESET DEFAULTS</button>
+          </div>
+          <p id="settingsStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <!-- Developer tools section contains the hidden test access gate. -->
+      <section class="doc-section">
+        <h2>Developer tools</h2>
+        <p>
+          Tests are hidden from normal navigation. This code gate is only a
+          convenience tool on a static site, not security.
+        </p>
+        <label
+          >Developer code
+          <input id="testCode" type="password" autocomplete="off" /></label
+        ><button id="openTests" type="button">OPEN TESTS</button>
+        <p id="testAccessStatus" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      © 2026 JPU Simulator. Built for learning and experimentation.
+    </footer>
+    <script type="module" src="js/settings.js"></script>
+  </body>
+</html>

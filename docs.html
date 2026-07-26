@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Reference guide for the JPU simulator instruction set."
+    />
+    <title>JPU Simulator — Documentation</title>
+    <link rel="stylesheet" href="dist/output.css" />
+  </head>
+  <body class="app-shell font-mono">
+    <!-- Documentation page shell with shared navigation and page-specific content. -->
+    <header class="site-header">
+      <a class="site-title" href="index.html">JPU <span>Simulator</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="rom.html">ROM Editor</a><a href="dash.html">Dashboard</a
+        ><a href="docs.html" aria-current="page">Docs</a
+        ><a href="settings.html">Settings</a><a href="test.html">Tests</a>
+      </nav>
+    </header>
+    <main class="page-content docs-content">
+      <!-- Hero section introduces the reference guide and the simulator's capabilities. -->
+      <section class="hero-panel" aria-labelledby="docs-title">
+        <p class="eyebrow">REFERENCE GUIDE</p>
+        <h1 id="docs-title">Build programs for the JPU.</h1>
+        <p>
+          The CPU has 64 8-bit registers, two 256-byte RAM banks, an 8-slot call
+          stack, and a 256-instruction ROM. Use the ROM Editor to configure one
+          instruction at a time, save it, then run it in the Dashboard.
+        </p>
+      </section>
+      <!-- Quick-start guide helps beginners move from editing a ROM to running it. -->
+      <section class="doc-section" aria-labelledby="quick-start">
+        <h2 id="quick-start">Quick start</h2>
+        <ol>
+          <li>
+            Open <a href="rom.html">ROM Editor</a> and choose the instruction
+            fields.
+          </li>
+          <li>
+            Select <strong>SET</strong> to place it at the current address, then
+            move with PC+ or PC-.
+          </li>
+          <li>Select <strong>SAVE</strong> to keep the ROM in this browser.</li>
+          <li>
+            Open <a href="dash.html">Dashboard</a> and use STEP or RUN to
+            execute it.
+          </li>
+        </ol>
+      </section>
+      <!-- Instruction reference table explains what each opcode does. -->
+      <section class="doc-section" aria-labelledby="instructions">
+        <h2 id="instructions">Instructions</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Opcode</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>NOP</td>
+                <td>Does nothing; moves to the next instruction.</td>
+              </tr>
+              <tr>
+                <td>JMP</td>
+                <td>Jumps to the operand address (0–255).</td>
+              </tr>
+              <tr>
+                <td>LDI</td>
+                <td>
+                  Writes the operand value into the selected write register.
+                </td>
+              </tr>
+              <tr>
+                <td>ALU</td>
+                <td>
+                  Runs the chosen ALU operation using A and B, then writes the
+                  result to the selected register.
+                </td>
+              </tr>
+              <tr>
+                <td>STR0 / LOD0</td>
+                <td>Store to / load from RAM bank 0 at the operand address.</td>
+              </tr>
+              <tr>
+                <td>STR1 / LOD1</td>
+                <td>Store to / load from RAM bank 1 at the operand address.</td>
+              </tr>
+              <tr>
+                <td>CAL</td>
+                <td>
+                  Pushes the next address onto the end of the stack and jumps to
+                  the operand address.
+                </td>
+              </tr>
+              <tr>
+                <td>RET</td>
+                <td>Pops the last stack value and jumps to it.</td>
+              </tr>
+              <tr>
+                <td>PSHL</td>
+                <td>
+                  Pushes the selected B register onto the
+                  <strong>last</strong> (right-hand) end of the stack.
+                </td>
+              </tr>
+              <tr>
+                <td>PSHF</td>
+                <td>
+                  Pushes the selected B register onto the
+                  <strong>first</strong> (left-hand) end of the stack.
+                </td>
+              </tr>
+              <tr>
+                <td>POPL</td>
+                <td>
+                  Removes the value at the last (right-hand) end of the stack.
+                </td>
+              </tr>
+              <tr>
+                <td>POPF</td>
+                <td>
+                  Removes the value at the first (left-hand) end of the stack.
+                </td>
+              </tr>
+              <tr>
+                <td>HLT</td>
+                <td>Halts the current execution step.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- Field reference explains the meaning of each ROM editor control. -->
+      <section class="doc-section" aria-labelledby="fields">
+        <h2 id="fields">ROM Editor fields</h2>
+        <dl>
+          <dt>A Source / B Source</dt>
+          <dd>
+            Input registers used by ALU. B can also be the immediate operand.
+          </dd>
+          <dt>Write Register</dt>
+          <dd>
+            Destination for LDI, LOD, and ALU results. R0 is fixed at zero; ACC
+            is R63.
+          </dd>
+          <dt>Operand</dt>
+          <dd>An 8-bit immediate value or address (0–255).</dd>
+          <dt>Set Flags</dt>
+          <dd>
+            For ALU operations, updates condition flags used by conditional
+            instructions.
+          </dd>
+          <dt>Invert</dt>
+          <dd>
+            For ALU operations, bitwise-inverts the 8-bit result before writing
+            it.
+          </dd>
+          <dt>Use Condition</dt>
+          <dd>
+            When enabled, executes the instruction only if its selected
+            condition flag is true.
+          </dd>
+        </dl>
+      </section>
+      <!-- ALU and flag summary explains the machine's condition system. -->
+      <section class="doc-section" aria-labelledby="alu">
+        <h2 id="alu">ALU and flags</h2>
+        <p>
+          The ALU supports ADD, SUB, MUL, MUL2, MOD, SHL, SHR, ROR, ROL, AND,
+          NAND, OR, NOR, XOR, MAX, and MIN. Flags include zero/non-zero,
+          most/least-significant-bit, carry/no-carry, comparisons, maximum, and
+          prime/not-prime.
+        </p>
+      </section>
+      <!-- Limitations section sets expectations for what the current static version can and cannot do. -->
+      <section class="doc-section" aria-labelledby="limits">
+        <h2 id="limits">Known limitations</h2>
+        <p>
+          ROM saves are stored only in this browser until you export a
+          <code>.jpur</code> file. The hidden Tests page is a convenience tool,
+          not a secure area. Accounts and cloud saves are planned for a later
+          version.
+        </p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      © 2026 JPU Simulator. Built for learning and experimentation.
+    </footer>
+    <script type="module" src="js/ui.js"></script>
+  </body>
+</html>

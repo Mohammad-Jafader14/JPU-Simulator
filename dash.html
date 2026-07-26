@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JPU Simulator - Dashboard</title>
+
+    <link rel="stylesheet" href="dist/output.css" />
+  </head>
+
+  <body class="app-shell font-mono">
+    <!-- Page shell: this header and navigation stay consistent across simulator pages. -->
+    <header class="site-header">
+      <a class="site-title" href="index.html">JPU <span>Simulator</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="rom.html">ROM</a>
+        <a href="index.html">HOME</a>
+        <a href="docs.html">DOCS</a>
+        <a href="settings.html">SETTINGS</a>
+      </nav>
+    </header>
+
+    <main class="p-3 space-y-3">
+      <!-- Top row: execution controls, program counter, current instruction, and live status. -->
+
+      <div class="flex flex-row flex-wrap justify-between gap-3">
+        <div class="border border-black bg-white p-3">
+          <h2 class="font-bold">CLOCK</h2>
+
+          <div class="flex flex-wrap gap-2 mt-2">
+            <div class="flex flex-wrap justify-evenly gap-2 w-full">
+              <button
+                id="cpuReset"
+                class="hover:cursor-pointer border px-2 py-1 flex-1 min-w-32 text-center"
+              >
+                RESET
+              </button>
+
+              <button
+                id="cpuStep"
+                class="hover:cursor-pointer border px-2 py-1 flex-1 min-w-32 text-center"
+              >
+                STEP
+              </button>
+
+              <button
+                id="cpuBack"
+                class="hover:cursor-pointer border px-2 py-1 flex-1 min-w-32 text-center"
+              >
+                BACK
+              </button>
+
+              <button
+                id="cpuRun"
+                class="hover:cursor-pointer border px-2 py-1 flex-1 min-w-32 text-center"
+              >
+                RUN
+              </button>
+
+              <button
+                id="cpuPause"
+                class="hover:cursor-pointer border px-2 py-1 flex-1 min-w-32 text-center"
+              >
+                PAUSE
+              </button>
+            </div>
+            <input
+              type="number"
+              id="cpuSpeed"
+              class="border border-black px-2 py-1 w-full block"
+              value="20"
+            />
+          </div>
+        </div>
+
+        <div class="border border-black w-fit bg-white p-3">
+          <h2 class="font-bold">PC</h2>
+
+          <div id="pcValue">00000000 | 0 | 0x00</div>
+          <div class="flex gap-2 mt-2">
+            <div class="border border-black bg-white p-3">
+              <h2 class="font-bold">CONTROL SIGNALS</h2>
+
+              <pre id="signalsText">
+            OPCODE: 0
+          </pre
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-black bg-white p-3">
+          <h2 class="font-bold">COMING SOON...</h2>
+        </div>
+
+        <div class="border border-black min-w-0 whitespace-normal bg-white p-3">
+          <h2 class="font-bold">CURRENT INSTRUCTION</h2>
+
+          <div id="instructionText" class="w-full wrap-break-word text-wrap">
+            OPC: NOP
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle row: flags, ALU output, and control signals for the current instruction. -->
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <div class="border border-black bg-white p-3">
+          <h2 class="font-bold mb-2">FLAGS</h2>
+
+          <div
+            id="flagsGrid"
+            class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-1"
+          ></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div class="border border-black bg-white p-3">
+            <h2 class="font-bold">ALU</h2>
+
+            <div id="aluText">
+              A: 0<br />
+              B: 0<br />
+              OUT: 0
+            </div>
+          </div>
+          <div class="border border-black bg-white p-3">
+            <h2 class="font-bold">COMING SOON...</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Memory section: register, stack, and RAM views that update as the CPU runs. -->
+
+      <div class="border border-black bg-white p-5">
+        <h2 class="font-bold text-center mb-3">MEMORY</h2>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <!-- REGISTERS -->
+          <div
+            class="border border-black bg-zinc-50 p-4 w-72 h-72 flex flex-col flex-none"
+          >
+            <h3 class="font-bold text-center mb-3 pb-2 border-b border-black">
+              REGISTERS
+            </h3>
+
+            <div class="flex-1 min-h-0 overflow-y-auto">
+              <table class="text-sm">
+                <tbody id="registerTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- CALL STACK -->
+          <div
+            class="border border-black bg-zinc-50 p-4 w-72 h-72 flex flex-col flex-none"
+          >
+            <h3 class="font-bold text-center mb-3 pb-2 border-b border-black">
+              CALL STACK
+            </h3>
+
+            <div class="flex-1 min-h-0 overflow-y-auto">
+              <table class="text-sm">
+                <tbody id="stackTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- RAM 0 -->
+          <div
+            class="border border-black bg-zinc-50 p-4 w-72 h-72 flex flex-col flex-none"
+          >
+            <h3 class="font-bold text-center mb-3 pb-2 border-b border-black">
+              RAM 0
+            </h3>
+
+            <div class="flex-1 min-h-0 overflow-y-auto">
+              <table class="text-sm">
+                <tbody id="ram0Table"></tbody>
+              </table>
+            </div>
+          </div>
+          <!-- RAM 1 -->
+          <div
+            class="border border-black bg-zinc-50 p-4 w-72 h-72 flex flex-col flex-none"
+          >
+            <h3 class="font-bold text-center mb-3 pb-2 border-b border-black">
+              RAM 1
+            </h3>
+
+            <div class="flex-1 min-h-0 overflow-y-auto">
+              <table class="text-sm">
+                <tbody id="ram1Table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROM program view: shows the currently loaded instruction list with its fields. -->
+      <div class="border border-black bg-white p-3 w-full h-72 flex flex-col">
+        <h2 class="font-bold mb-2">ROM PROGRAM</h2>
+
+        <div
+          class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden border border-black"
+        >
+          <table class="text-sm text-center border-collapse">
+            <thead>
+              <tr>
+                <th class="border px-1.5 text-xs whitespace-nowrap">
+                  ADDR<span class="hidden md:inline">ESS</span>
+                </th>
+                <th class="border px-1 text-xs whitespace-nowrap">
+                  OPC<span class="hidden md:inline">ODE</span>
+                </th>
+                <th class="border px-1 text-xs whitespace-nowrap">
+                  REG <span class="hidden md:inline">FILES</span>
+                </th>
+                <th class="border px-1 text-xs whitespace-nowrap">A</th>
+                <th class="border px-1 text-xs whitespace-nowrap">B</th>
+                <th class="border px-1 text-xs whitespace-nowrap">ALU</th>
+                <th class="border px-1 text-xs whitespace-nowrap">
+                  IMM<span class="hidden lg:inline">IDDIENT</span>
+                </th>
+                <th class="border px-1 text-xs whitespace-nowrap">
+                  COND<span class="hidden lg:inline">ITIONS</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody id="romTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Console area: reserved for runtime output and diagnostic messages. -->
+
+      <div class="border border-black bg-white p-3">
+        <h2 class="font-bold">CONSOLE</h2>
+
+        <pre id="consoleOutput"></pre>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      © 2026 JPU Simulator. Built for learning and experimentation.
+    </footer>
+    <script type="module" src="js/ui.js"></script>
+    <script type="module" src="js/dash.js"></script>
+  </body>
+</html>

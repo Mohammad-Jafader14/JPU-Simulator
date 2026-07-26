@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JPU Simulator — Updates</title>
+    <link rel="stylesheet" href="dist/output.css" />
+  </head>
+  <body class="app-shell font-mono">
+    <!-- Updates page documents the simulator's recent changes and known constraints. -->
+    <header class="site-header">
+      <a class="site-title" href="index.html">JPU <span>CPU Simulator</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="rom.html">ROM Editor</a><a href="dash.html">Dashboard</a
+        ><a href="docs.html">Docs</a><a href="settings.html">Settings</a
+        ><a href="updates.html" aria-current="page">Updates</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <!-- Hero intro explains the purpose of this release notes page. -->
+      <section class="hero-panel">
+        <p class="eyebrow">RELEASE NOTES</p>
+        <h1>What changed.</h1>
+        <p>A small, honest history of the simulator.</p>
+      </section>
+      <!-- Release history lists the main milestones and user-visible improvements. -->
+      <section>
+        <div class="doc-section">
+          <h2>v0.9.0-alpha — July 2026</h2>
+          <ul>
+            <li>
+              Added responsive navigation, light/dark/System themes, and
+              Settings.
+            </li>
+            <li>Added beginner documentation and ROM examples.</li>
+            <li>Added a real HLT state and dashboard status.</li>
+            <li>Added versioned update notes and contributor guidance.</li>
+          </ul>
+        </div>
+      </section>
+      <!-- Limitations section keeps the project expectations transparent. -->
+      <section class="doc-section">
+        <h2>Known limitations</h2>
+        <ul>
+          <li>ROM saves stay in this browser unless exported.</li>
+          <li>The Tests gate is a convenience feature, not security.</li>
+          <li>There are no accounts, cloud saves, or feedback service yet.</li>
+        </ul>
+      </section>
+    </main>
+    <footer class="site-footer">© 2026 JPU Simulator · v0.9.0-alpha</footer>
+    <script type="module" src="js/ui.js"></script>
+  </body>
+</html>

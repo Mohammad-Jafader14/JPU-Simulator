@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JPU Simulator - Home</title>
+
+    <link rel="stylesheet" href="dist/output.css" />
+  </head>
+  <body class="app-shell font-mono">
+    <!-- Home page shell: introduces the simulator and points visitors to the main tools. -->
+    <header class="site-header">
+      <a class="site-title" href="index.html" aria-current="page"
+        >JPU <span>Simulator</span></a
+      >
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="rom.html"
+          >ROM <span class="sm:hidden md:inline">Editor</span></a
+        ><a href="dash.html">Dashboard</a><a href="docs.html">Docs</a
+        ><a href="settings.html">Settings</a><a href="test.html">Tests</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <!-- Hero section explains the simulator's purpose in a single glance. -->
+      <section class="hero-panel" aria-labelledby="home-title">
+        <p class="eyebrow">8-BIT LEARNING CPU</p>
+        <h1 id="home-title">Program it. Step it. Understand it.</h1>
+        <p>
+          Use the ROM Editor to assemble a 256-instruction program, then inspect
+          every register, flag, memory bank, and stack value as it runs.
+        </p>
+        <p class="mt-5">
+          <a href="rom.html" class="site-nav a" style="display: inline-block"
+            >OPEN ROM EDITOR →</a
+          >
+        </p>
+      </section>
+      <!-- Getting-started section gives beginners a simple first-run path. -->
+      <section class="doc-section" aria-labelledby="start-title">
+        <h2 id="start-title">Your first program</h2>
+        <ol>
+          <li>
+            Open the <a href="rom.html">ROM Editor</a> and load “Add 5 + 7”.
+          </li>
+          <li>
+            Select <strong>SAVE</strong> to keep the example in this browser.
+          </li>
+          <li>
+            Open the <a href="dash.html">Dashboard</a> and use STEP to watch
+            each instruction.
+          </li>
+          <li>
+            Read <a href="docs.html">the instruction guide</a> when you meet a
+            new operation.
+          </li>
+        </ol>
+      </section>
+      <section>
+        <a
+          href="https://discord.gg/baGP4PZS7t"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-1"
+        >
+          Join our Discord community!
+        </a>
+      </section>
+    </main>
+    <footer class="site-footer">
+      © 2026 JPU Simulator. Built for learning and experimentation.
+    </footer>
+    <script type="module" src="js/ui.js"></script>
+  </body>
+</html>
